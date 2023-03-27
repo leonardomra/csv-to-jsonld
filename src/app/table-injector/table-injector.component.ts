@@ -40,40 +40,83 @@ export class TableInjectorComponent implements OnInit {
     }
     return result;
   }
-
-  /*
+  
   convertToJSONLD() {
-    console.log('this.agGridComponent.agGrid:', this.agGridComponent);
     const columnDefs = this.agGridComponent.agGrid.columnApi.getAllDisplayedColumns();
     const jsonLDData = this.rowData.map((row: any) => {
       const newRow = {};
       columnDefs.forEach((colDef) => {
         const field = colDef.getColDef().field;
         const headerComponentParams = colDef.getColDef().headerComponentParams;
-        const selectedOption = headerComponentParams ? headerComponentParams.selectedOption : null;
-        if (selectedOption && selectedOption !== 'ignore') {
-          newRow[selectedOption] = row[field];
+        if (headerComponentParams) {
+          const selectedOption = headerComponentParams.selectedOption;
+          const selectedPropertyType = headerComponentParams.selectedPropertyType;
+          const columnName = colDef.getColDef().headerName;
+          if (selectedOption === 'custom') {
+            if (selectedPropertyType) {
+              newRow[columnName] = {
+                originalLabel: columnName,
+                label: selectedPropertyType,
+                type: selectedOption
+              };
+            }
+          } else {
+            if (selectedOption) {
+              newRow[columnName] = {
+                originalLabel: columnName,
+                label: selectedOption,
+                type: undefined
+              };
+            }
+          }
         }
       });
       return newRow;
     });
     console.log('JSON-LD Data:', jsonLDData);
   }
-  */
-  
-  convertToJSONLD() {
-    console.log('this.agGridComponent.agGrid:', this.agGridComponent);
+  convertToJSONLDOLD() {
     const columnDefs = this.agGridComponent.agGrid.columnApi.getAllDisplayedColumns();
     const jsonLDData = this.rowData.map((row: any) => {
       const newRow = {};
       columnDefs.forEach((colDef) => {
         const field = colDef.getColDef().field;
         const headerComponentParams = colDef.getColDef().headerComponentParams;
-  
         if (headerComponentParams) {
           const selectedOption = headerComponentParams.selectedOption;
           const selectedPropertyType = headerComponentParams.selectedPropertyType;
+          const columnName = colDef.getColDef().headerName;
+          if (selectedOption === 'custom') {
+            if (selectedPropertyType) {
+              newRow[selectedPropertyType] = {
+                [columnName]: row[field]
+              };
+            }
+          } else {
+            if (selectedOption) {
+              newRow[selectedOption] = {
+                [columnName]: row[field]
+              };
+            }
+          }
+        }
+      });
+      return newRow;
+    });
+    console.log('JSON-LD Data:', jsonLDData);
+  }
   
+  /*
+  convertToJSONLD() {
+    const columnDefs = this.agGridComponent.agGrid.columnApi.getAllDisplayedColumns();
+    const jsonLDData = this.rowData.map((row: any) => {
+      const newRow = {};
+      columnDefs.forEach((colDef) => {
+        const field = colDef.getColDef().field;
+        const headerComponentParams = colDef.getColDef().headerComponentParams;
+        if (headerComponentParams) {
+          const selectedOption = headerComponentParams.selectedOption;
+          const selectedPropertyType = headerComponentParams.selectedPropertyType;
           if (selectedOption === 'custom') {
             if (selectedPropertyType) {
               newRow[selectedPropertyType] = row[field];
@@ -89,6 +132,6 @@ export class TableInjectorComponent implements OnInit {
     });
     console.log('JSON-LD Data:', jsonLDData);
   }
-  
+  */
   
 }

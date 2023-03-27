@@ -1,7 +1,6 @@
-<p>Total Rows: {{ rowCount }}</p>
 <ag-grid-angular
   #agGrid
-  style="width: 100%; height: 500px;"
+  style="width: 100%; height: 100%;"
   class="ag-theme-material"
   [gridOptions]="gridOptions"
   [columnDefs]="columnDefs"
@@ -11,4 +10,5 @@
   (paginationChanged)="onPaginationChanged()"
   (cellValueChanged)="onCellValueChanged($event)">
 </ag-grid-angular>
-<input type="file" (change)="onFileChange($event)" />
+
+<!--<input type="file" (change)="onFileChange($event)" />-->

@@ -1,3 +1,7 @@
-<p>table-injector works!</p>
-<app-ag-grid-table-component></app-ag-grid-table-component>
-<button (click)="convertToJSONLD()">Convert to JSON-LD</button>
+<!--<h2 mat-dialog-title>Data Injector</h2>-->
+<mat-dialog-content class="scrollable-container" style="max-height: 1000px;">
+    <app-ag-grid-table-component></app-ag-grid-table-component>
+</mat-dialog-content>
+<mat-dialog-actions style="height: 57px;">
+    <button mat-button (click)="convertToJSONLD()" mat-dialog-close>Convert to JSON-LD</button>
+</mat-dialog-actions>

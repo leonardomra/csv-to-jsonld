@@ -46,7 +46,7 @@ export class AgGridTableComponentComponent implements OnInit {
       {
         headerName: '#',
         valueGetter: (params) => params.node.rowIndex + 1,
-        width: 100,
+        width: 70,
         pinned: 'left',
         filter: false,
         sortable: false,
@@ -115,7 +115,7 @@ export class AgGridTableComponentComponent implements OnInit {
 
 
   onGridReady(params) {
-    params.api.setHeaderHeight(100); // Add this line
+    params.api.setHeaderHeight(150); // Add this line
   }
 
   ngOnInit() {
@@ -154,7 +154,7 @@ export class AgGridTableComponentComponent implements OnInit {
           {
             headerName: '#',
             valueGetter: (params) => (params.node.rowIndex + 1) + (this.agGrid.api.paginationGetCurrentPage() * this.agGrid.api.paginationGetPageSize()),
-            width: 100,
+            width: 70,
             pinned: 'left',
             sortable: false,
             filter: false,
@@ -200,7 +200,7 @@ export class AgGridTableComponentComponent implements OnInit {
         {
           headerName: '#',
           valueGetter: (params) => (params.node.rowIndex + 1) + (params.api.paginationGetCurrentPage() * params.api.paginationGetPageSize()),
-          width: 100,
+          width: 70,
           pinned: 'left',
           filter: false,
           sortable: false,

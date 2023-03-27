@@ -20,12 +20,27 @@ interface ExtendedColDef extends ColDef {
         </div>
         <div *ngIf="!isRowNumbersColumn()" class="filter-icon" (click)="onFilterButtonClicked($event)">⚙️</div>
       </div>
+      <mat-form-field class="custom-select" appearance="outline" *ngIf="!isRowNumbersColumn()" (mousedown)="stopPropagation($event)">
+        <mat-label>Mapping</mat-label>
+        <mat-select [(ngModel)]="selectedMapping" (selectionChange)="onMappingChange($event)">
+          <mat-option *ngFor="let option of mappingOptions" [value]="option.value">{{ option.label }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="custom-select" appearance="outline" *ngIf="showPropertyTypesSelector()" (mousedown)="stopPropagation($event)">
+        <mat-label>Property Type</mat-label>
+        <mat-select [(ngModel)]="selectedPropertyType" (selectionChange)="onPropertyTypeChange($event)">
+          <mat-option *ngFor="let option of propertyTypes" [value]="option.value">{{ option.label }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <!--
       <select [(ngModel)]="selectedMapping" *ngIf="!isRowNumbersColumn()" (change)="onMappingChange($event)" (mousedown)="stopPropagation($event)">
         <option *ngFor="let option of mappingOptions" [value]="option.value">{{ option.label }}</option>
       </select>
       <select [(ngModel)]="selectedPropertyType" *ngIf="showPropertyTypesSelector()" (change)="onPropertyTypeChange($event)" (mousedown)="stopPropagation($event)">
         <option *ngFor="let option of propertyTypes" [value]="option.value">{{ option.label }}</option>
       </select>
+      -->
     </div>
   `,
   styles: [
@@ -42,32 +57,41 @@ interface ExtendedColDef extends ColDef {
       /*height: 100px;*/
       width: 100%;
     }
-
     .header-top {
       display: flex;
       justify-content: center;
       align-items: center;
       width: 100%;
     }
-
     .header-text {
       cursor: pointer;
     }
-
     .sort-icon {
       margin-left: 5px;
     }
-
     .filter-icon {
       cursor: pointer;
       margin-left: 5px;
     }
-
     select {
       margin-top: 5px;
       width: 100%;
       box-sizing: border-box;
     }
+    :host ::ng-deep .custom-select {
+      width: 100%;
+    }
+    :host ::ng-deep .custom-select .mat-form-field-wrapper {
+      /*padding-bottom: 0;
+      padding-top: 0;*/
+    }
+    :host ::ng-deep .custom-select .mat-form-field-flex {
+      /*padding: 0.5em 0;*/
+    }
+    :host ::ng-deep .custom-select .mat-form-field-label-wrapper {
+      /*top: 0;*/
+    }
+    
     `,
   ],
 })

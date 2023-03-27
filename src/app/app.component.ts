@@ -1,6 +1,8 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
 import * as Papa from 'papaparse';
+import { MatDialog } from '@angular/material/dialog';
+import { TableInjectorComponent } from './table-injector/table-injector.component';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +17,7 @@ export class AppComponent {
   selectedRows: any[] = [];
   fileLoaded = false;
 
-  constructor(private changeDetector: ChangeDetectorRef) { }
+  constructor(private changeDetector: ChangeDetectorRef, public dialog: MatDialog) { }
 
   showDialog() {
     this.display = true;
@@ -108,7 +110,16 @@ export class AppComponent {
     return result;
   }
 
-
+  openDialog() {
+    const dialogRef = this.dialog.open(TableInjectorComponent, {
+      width: '90%',
+      height: '570px',
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
 
 
 }

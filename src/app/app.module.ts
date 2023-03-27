@@ -21,7 +21,13 @@ import { CustomHeaderComponent } from './ag-grid-table-component/custom-header.c
 import { TableInjectorComponent } from './table-injector/table-injector.component';
 import { TableDataService } from './table-data.service';
 
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material';
 
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +37,12 @@ import { TableDataService } from './table-data.service';
     TableInjectorComponent
   ],
   imports: [
+    MatSelectModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDialogModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -43,6 +55,6 @@ import { TableDataService } from './table-data.service';
   ],
   providers: [TableDataService],
   bootstrap: [AppComponent],
-  entryComponents: [ImageCellRendererComponent, CustomHeaderComponent]
+  entryComponents: [ImageCellRendererComponent, CustomHeaderComponent, TableInjectorComponent]
 })
 export class AppModule { }

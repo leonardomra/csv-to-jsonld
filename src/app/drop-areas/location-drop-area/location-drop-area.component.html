@@ -1,0 +1,12 @@
+<div
+  class="drop-area"
+  (click)="fileInput.click()"
+  (dragover)="onDragOver($event)"
+  (drop)="onDrop($event)"
+>
+  <input #fileInput type="file" (change)="onFileSelected($event)" hidden />
+  <i class="material-icons">file_download</i>
+  <p class="entity-type">Location</p>
+  <p>Drop your CSV or XLSX file here to upload</p>
+  <button mat-raised-button>Browse</button>
+</div>

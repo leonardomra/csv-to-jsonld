@@ -1,5 +1,6 @@
 <ag-grid-angular
   #agGrid
+  *ngIf="selectedDropArea"
   style="width: 100%; height: 100%;"
   class="ag-theme-material"
   [gridOptions]="gridOptions"
@@ -12,3 +13,15 @@
 </ag-grid-angular>
 
 <!--<input type="file" (change)="onFileChange($event)" />-->
+
+<ng-container *ngIf="!selectedDropArea" class="drop-areas-wrapper">
+  <div class="drop-areas-wrapper">
+    <app-person-drop-area (fileChange)="onDropAreaSelected('Person', $event)"></app-person-drop-area>
+    <app-artifact-drop-area (fileChange)="onDropAreaSelected('Artifact', $event)"></app-artifact-drop-area>
+    <app-concept-drop-area (fileChange)="onDropAreaSelected('Artifact', $event)"></app-concept-drop-area>
+    <app-event-drop-area (fileChange)="onDropAreaSelected('Artifact', $event)"></app-event-drop-area>
+    <app-institution-drop-area (fileChange)="onDropAreaSelected('Artifact', $event)"></app-institution-drop-area>
+    <app-location-drop-area (fileChange)="onDropAreaSelected('Artifact', $event)"></app-location-drop-area>
+  </div>
+</ng-container>
+

@@ -21,6 +21,7 @@ export class AgGridTableComponentComponent implements OnInit {
   rowData: any[];
   defaultColDef: any;
   rowCount: number;
+  selectedDropArea: string | null = null;
 
   constructor(private tableDataService: TableDataService) {
     this.gridOptions = {
@@ -127,11 +128,12 @@ export class AgGridTableComponentComponent implements OnInit {
     //this.tableDataService.setRowData(updatedRowData);
   }
 
-  onFileChange(event: any) {
-    const file = event.target.files[0];
+  onFileChange(file: File) {
+    //const file = event.target.files[0];
     if (!file) {
       return;
     }
+    // Handle the file based on its type (CSV or Excel)
     if (file.type === 'text/csv') {
       this.readCSV(file);
     } else if (
@@ -143,9 +145,21 @@ export class AgGridTableComponentComponent implements OnInit {
     } else {
       alert('Unsupported file type');
     }
+  
+    // After setting rowData, filter it based on the selected drop area
+    if (this.selectedDropArea) {
+      this.rowData = this.rowData.filter(row => row.type === this.selectedDropArea);
+    }
+  
+    // Refresh the ag-grid with new row data
+    if (this.agGrid && this.agGrid.api) {
+      this.agGrid.api.setRowData(this.rowData);
+    }
+    
   }
-
+  
   readCSV(file: File) {
+    console.log('Reading CSV file');
     parse(file, {
       complete: (results) => {
         const data = results.data as any[][];
@@ -187,6 +201,7 @@ export class AgGridTableComponentComponent implements OnInit {
   }
 
   readExcel(file: File) {
+    console.log('Reading Excel file');
     const reader = new FileReader();
     reader.onload = (e: any) => {
       const binaryString = e.target.result;
@@ -234,4 +249,18 @@ export class AgGridTableComponentComponent implements OnInit {
   onPaginationChanged() {
     this.agGrid.api.refreshCells();
   }
+
+  onDropAreaSelected(type: string, event: any) {
+    console.log('onDropAreaSelected', type, event);
+    this.selectedDropArea = type;
+    let file = null;
+    if (event.target && event.target.files) {
+      file = event.target.files[0];
+    }
+    if (event.dataTransfer && event.dataTransfer.files) {
+      file = event.dataTransfer.files[0];
+    }
+    this.onFileChange(file);
+  }
+
 }

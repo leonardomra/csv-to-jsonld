@@ -24,19 +24,32 @@ import { TableDataService } from './table-data.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material';
-
+import { MatRippleModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PersonDropAreaComponent } from './drop-areas/person-drop-area/person-drop-area.component';
+import { ConceptDropAreaComponent } from './drop-areas/concept-drop-area/concept-drop-area.component';
+import { LocationDropAreaComponent } from './drop-areas/location-drop-area/location-drop-area.component';
+import { ArtifactDropAreaComponent } from './drop-areas/artifact-drop-area/artifact-drop-area.component';
+import { EventDropAreaComponent } from './drop-areas/event-drop-area/event-drop-area.component';
+import { InstitutionDropAreaComponent } from './drop-areas/institution-drop-area/institution-drop-area.component';
 @NgModule({
   declarations: [
     AppComponent,
     AgGridTableComponentComponent,
     ImageCellRendererComponent,
     CustomHeaderComponent,
-    TableInjectorComponent
+    TableInjectorComponent,
+    PersonDropAreaComponent,
+    ConceptDropAreaComponent,
+    LocationDropAreaComponent,
+    ArtifactDropAreaComponent,
+    EventDropAreaComponent,
+    InstitutionDropAreaComponent
   ],
   imports: [
+    MatRippleModule,
     MatSelectModule,
     MatFormFieldModule,
     ReactiveFormsModule,

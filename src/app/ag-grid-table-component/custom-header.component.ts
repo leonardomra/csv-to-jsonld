@@ -100,9 +100,9 @@ export class CustomHeaderComponent implements OnInit, IHeaderAngularComp {
   params: IHeaderParams;
   mappingOptions = [
     { label: 'Ignore Column', value: 'ignore' },
-    { label: 'Title', value: 'title' },
-    { label: 'Description', value: 'description' },
-    { label: 'Picture', value: 'picture' },
+    { label: 'Card Title', value: 'title' },
+    { label: 'Card Description', value: 'description' },
+    { label: 'Card Picture', value: 'picture' },
     { label: 'Create Custom Metadata', value: 'custom' },
   ];
   propertyTypes = [

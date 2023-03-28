@@ -1,12 +1,16 @@
 <button pButton label="Open Dialog" (click)="showDialog()"></button>
 
-<p-dialog [(visible)]="display" [modal]="true" [style]="{width: '70vw'}" [maximizable]="true" [closable]="false" [baseZIndex]="10000" [draggable]="true" [resizable]="true" class="csv-dialog" [styleClass]="'my-dialog'" [contentStyle]="{'max-height': '100vh'}">
+<p-dialog [(visible)]="display" [modal]="true" [style]="{width: '70vw'}" [maximizable]="true" [closable]="false"
+  [baseZIndex]="10000" [draggable]="true" [resizable]="true" class="csv-dialog" [styleClass]="'my-dialog'"
+  [contentStyle]="{'max-height': '100vh'}">
   <p-header>
     CSV to JSON-LD Converter
   </p-header>
-    <ngx-file-drop *ngIf="!fileLoaded" dropZoneLabel="Drop files here" (fileOver)="fileOver($event)" (fileLeave)="fileLeave($event)" (onFileDrop)="dropped($event)">
-    </ngx-file-drop>
-  <p-table [value]="csvData" [columns]="columns" *ngIf="csvData" [autoLayout]="true" [scrollable]="true" scrollHeight="350px" editMode="cell">
+  <ngx-file-drop *ngIf="!fileLoaded" dropZoneLabel="Drop files here" (fileOver)="fileOver($event)"
+    (fileLeave)="fileLeave($event)" (onFileDrop)="dropped($event)">
+  </ngx-file-drop>
+  <p-table [value]="csvData" [columns]="columns" *ngIf="csvData" [autoLayout]="true" [scrollable]="true"
+    scrollHeight="350px" editMode="cell">
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th *ngFor="let col of columns" [pSortableColumn]="col" pResizableColumn>{{col}}</th>
@@ -29,8 +33,9 @@
   </p-table>
 
   <p-footer>
-    <button pButton label="Cancel" (click)="cancel()" class="p-button-text"></button>
-    <button pButton label="Convert to JSON-LD" (click)="convertToJsonLd()" class="p-button-success" *ngIf="csvData"></button>
+    <!--button pButton label="Cancel" (click)="cancel()" class="p-button-text"></button-->
+    <button mat-raised-button color="primary" label="Convert to JSON-LD" (click)="convertToJsonLd()"
+      class="p-button-success" *ngIf="csvData"></button>
   </p-footer>
 </p-dialog>
 

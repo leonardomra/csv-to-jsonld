@@ -1,44 +1,4 @@
-<button pButton label="Open Dialog" (click)="showDialog()"></button>
-
-<p-dialog [(visible)]="display" [modal]="true" [style]="{width: '70vw'}" [maximizable]="true" [closable]="false"
-  [baseZIndex]="10000" [draggable]="true" [resizable]="true" class="csv-dialog" [styleClass]="'my-dialog'"
-  [contentStyle]="{'max-height': '100vh'}">
-  <p-header>
-    CSV to JSON-LD Converter
-  </p-header>
-  <ngx-file-drop *ngIf="!fileLoaded" dropZoneLabel="Drop files here" (fileOver)="fileOver($event)"
-    (fileLeave)="fileLeave($event)" (onFileDrop)="dropped($event)">
-  </ngx-file-drop>
-  <p-table [value]="csvData" [columns]="columns" *ngIf="csvData" [autoLayout]="true" [scrollable]="true"
-    scrollHeight="350px" editMode="cell">
-    <ng-template pTemplate="header" let-columns>
-      <tr>
-        <th *ngFor="let col of columns" [pSortableColumn]="col" pResizableColumn>{{col}}</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-rowData let-columns="columns">
-      <tr [pEditableRow]="rowData">
-        <td *ngFor="let col of columns" pEditableColumn>
-          <p-cellEditor>
-            <ng-template pTemplate="input">
-              <input [(ngModel)]="rowData[col]" type="text" style="width:100%">
-            </ng-template>
-            <ng-template pTemplate="output">
-              {{rowData[col]}}
-            </ng-template>
-          </p-cellEditor>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
-
-  <p-footer>
-    <!--button pButton label="Cancel" (click)="cancel()" class="p-button-text"></button-->
-    <button mat-raised-button color="primary" label="Convert to JSON-LD" (click)="convertToJsonLd()"
-      class="p-button-success" *ngIf="csvData"></button>
-  </p-footer>
-</p-dialog>
-
-<button mat-raised-button color="primary" (click)="openDialog()">Open Table Injector</button>
-
+<div>
+  <button mat-raised-button color="primary" (click)="openDialog()">Open Table Injector</button>
+</div>
 <router-outlet></router-outlet>

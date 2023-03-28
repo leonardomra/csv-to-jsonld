@@ -1,0 +1,10 @@
+<!--<h2 mat-dialog-title>Data Injector</h2>-->
+<mat-dialog-content class="scrollable-container" style="max-height: 1000px;">
+    <app-ag-grid-table-component (onTableType)="injectType($event)"></app-ag-grid-table-component>
+</mat-dialog-content>
+<mat-dialog-actions style="height: 57px;">
+    <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+    <button mat-raised-button (click)="convertToJSONLD(); $event.stopPropagation();" color="primary" style="margin-left: auto; margin-right: 0;"
+        >Convert to JSON-LD</button>
+</mat-dialog-actions>
+

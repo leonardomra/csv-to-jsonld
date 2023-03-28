@@ -96,13 +96,14 @@ interface ExtendedColDef extends ColDef {
   ],
 })
 export class CustomHeaderComponent implements OnInit, IHeaderAngularComp {
-  
+
   params: IHeaderParams;
   mappingOptions = [
     { label: 'Ignore Column', value: 'ignore' },
-    { label: 'Card Title', value: 'title' },
+    { label: 'Card Title', value: 'name' },
     { label: 'Card Description', value: 'description' },
-    { label: 'Card Picture', value: 'picture' },
+    { label: 'Card Picture', value: 'image' },
+    { label: 'Card Category', value: 'category' },
     { label: 'Create Custom Metadata', value: 'custom' },
   ];
   propertyTypes = [
@@ -111,14 +112,15 @@ export class CustomHeaderComponent implements OnInit, IHeaderAngularComp {
     { label: 'GPS', value: 'gps' },
     { label: 'Boolean', value: 'boolean' },
     { label: 'Text', value: 'text' },
+    { label: 'Connection', value: 'connection' },
   ];
   selectedMapping: string = this.mappingOptions[0].value;
   selectedPropertyType: string = this.propertyTypes[0].value;
-  
+
   ngOnInit(): void {
     this.onPropertyTypeChange({ target: { value: this.selectedPropertyType } });
   }
-  
+
   agInit(params: IHeaderParams): void {
     this.params = params;
     const colDef = this.params.column.getColDef();
@@ -144,7 +146,7 @@ export class CustomHeaderComponent implements OnInit, IHeaderAngularComp {
     }
     colDef.headerComponentParams.selectedOption = selectedValue;
     this.params.api.refreshCells({ columns: [this.params.column], force: true });
-    console.log('Selected option for column:', this.params.displayName, colDef.headerComponentParams.selectedOption);
+    //console.log('Selected option for column:', this.params.displayName, colDef.headerComponentParams.selectedOption);
   }
 
   onPropertyTypeChange(event: any): void {
@@ -155,7 +157,7 @@ export class CustomHeaderComponent implements OnInit, IHeaderAngularComp {
     }
     colDef.headerComponentParams.selectedPropertyType = selectedValue;
     this.params.api.refreshCells({ columns: [this.params.column], force: true });
-    console.log('Selected property type for column:', this.params.displayName, colDef.headerComponentParams.selectedPropertyType);
+    //console.log('Selected property type for column:', this.params.displayName, colDef.headerComponentParams.selectedPropertyType);
   }
 
   stopPropagation(event: MouseEvent): void {
@@ -165,7 +167,7 @@ export class CustomHeaderComponent implements OnInit, IHeaderAngularComp {
   onSortRequested(event: MouseEvent): void {
     this.params.progressSort(event.shiftKey);
   }
-  
+
   onFilterButtonClicked(event: MouseEvent): void {
     this.params.showColumnMenu((event.target as HTMLElement));
   }

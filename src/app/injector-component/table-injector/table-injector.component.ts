@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { TableDataService } from '../table-data.service';
-import { AgGridTableComponentComponent } from '../ag-grid-table-component/ag-grid-table-component.component';
-
+import { TableDataService } from '../../table-data.service';
+import { AgGridTableComponentComponent } from './../ag-grid-table-component/ag-grid-table-component.component';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-table-injector',
@@ -10,9 +10,20 @@ import { AgGridTableComponentComponent } from '../ag-grid-table-component/ag-gri
 })
 export class TableInjectorComponent implements OnInit {
   rowData: any[];
+  errorMessage: string | null = null;
+  entityTypeMapping = {
+    'Person': 'http://schema.org/Person',
+    'Artifact': 'http://schema.org/CreativeWork',
+    'Concept': 'http://schema.org/Thing',
+    'Event': 'http://schema.org/Event',
+    'Institution': 'http://schema.org/Organization',
+    'Location': 'http://schema.org/Place',
+  };
+  selectedEntityType: string | null = null;
+
   @ViewChild(AgGridTableComponentComponent, { static: false }) agGridComponent!: AgGridTableComponentComponent;
 
-  constructor(private tableDataService: TableDataService) {}
+  constructor(private tableDataService: TableDataService, public dialogRef: MatDialogRef<TableInjectorComponent>) {}
 
   ngOnInit() {
     this.tableDataService.rowData$.subscribe((data) => {
@@ -42,6 +53,80 @@ export class TableInjectorComponent implements OnInit {
   }
   
   convertToJSONLD() {
+    const self = this;
+    setTimeout(() => {
+      self.errorMessage = null;
+      console.log('Clearing error message');
+    }, 3000);
+    if (!this.agGridComponent || !this.agGridComponent.agGrid) {
+      console.log('agGrid is not available yet');
+      this.errorMessage = 'Please upload a file first.';
+      return;
+    }
+    if (!this.rowData || this.rowData.length === 0) {
+      console.log('No data uploaded yet');
+      this.errorMessage = 'Please upload a file first.';
+      return;
+    }
+    this.errorMessage = null;
+    const columnDefs = this.agGridComponent.agGrid.columnApi.getAllDisplayedColumns();
+    const jsonLDData = this.rowData.map((row: any) => {
+      
+      const newRow = {
+        '@type': this.entityTypeMapping[this.selectedEntityType]
+      };
+      columnDefs.forEach((colDef) => {
+        const field = colDef.getColDef().field;
+        const headerComponentParams = colDef.getColDef().headerComponentParams;
+        if (headerComponentParams) {
+          const selectedOption = headerComponentParams.selectedOption;
+          const selectedPropertyType = headerComponentParams.selectedPropertyType;
+          const columnName = colDef.getColDef().headerName;
+          if (selectedOption === 'custom') {
+            if (selectedPropertyType) {
+              newRow[columnName] = {
+                originalLabel: columnName,
+                label: selectedPropertyType,
+                type: selectedOption,
+                value: row[field]
+              };
+            }
+          } else {
+            if (selectedOption) {
+              newRow[selectedOption] = {
+                originalLabel: columnName,
+                label: selectedOption,
+                type: undefined,
+                value: row[field]
+              };
+            }
+          }
+        }
+      });
+      return newRow;
+    });
+    console.log('JSON-LD Data:', jsonLDData);
+    this.dialogRef.close();
+  }
+  
+  /*
+  convertToJSONLD() {
+    const self = this;
+    setTimeout(() => {
+      self.errorMessage = null;
+      console.log('Clearing error message');
+    }, 3000);
+    if (!this.agGridComponent || !this.agGridComponent.agGrid) {
+      console.log('agGrid is not available yet');
+      this.errorMessage = 'Please upload a file first.';
+      return;
+    }
+    if (!this.rowData || this.rowData.length === 0) {
+      console.log('No data uploaded yet');
+      this.errorMessage = 'Please upload a file first.';
+      return;
+    }
+    this.errorMessage = null;
     const columnDefs = this.agGridComponent.agGrid.columnApi.getAllDisplayedColumns();
     const jsonLDData = this.rowData.map((row: any) => {
       const newRow = {};
@@ -74,64 +159,13 @@ export class TableInjectorComponent implements OnInit {
       return newRow;
     });
     console.log('JSON-LD Data:', jsonLDData);
-  }
-  convertToJSONLDOLD() {
-    const columnDefs = this.agGridComponent.agGrid.columnApi.getAllDisplayedColumns();
-    const jsonLDData = this.rowData.map((row: any) => {
-      const newRow = {};
-      columnDefs.forEach((colDef) => {
-        const field = colDef.getColDef().field;
-        const headerComponentParams = colDef.getColDef().headerComponentParams;
-        if (headerComponentParams) {
-          const selectedOption = headerComponentParams.selectedOption;
-          const selectedPropertyType = headerComponentParams.selectedPropertyType;
-          const columnName = colDef.getColDef().headerName;
-          if (selectedOption === 'custom') {
-            if (selectedPropertyType) {
-              newRow[selectedPropertyType] = {
-                [columnName]: row[field]
-              };
-            }
-          } else {
-            if (selectedOption) {
-              newRow[selectedOption] = {
-                [columnName]: row[field]
-              };
-            }
-          }
-        }
-      });
-      return newRow;
-    });
-    console.log('JSON-LD Data:', jsonLDData);
-  }
-  
-  /*
-  convertToJSONLD() {
-    const columnDefs = this.agGridComponent.agGrid.columnApi.getAllDisplayedColumns();
-    const jsonLDData = this.rowData.map((row: any) => {
-      const newRow = {};
-      columnDefs.forEach((colDef) => {
-        const field = colDef.getColDef().field;
-        const headerComponentParams = colDef.getColDef().headerComponentParams;
-        if (headerComponentParams) {
-          const selectedOption = headerComponentParams.selectedOption;
-          const selectedPropertyType = headerComponentParams.selectedPropertyType;
-          if (selectedOption === 'custom') {
-            if (selectedPropertyType) {
-              newRow[selectedPropertyType] = row[field];
-            }
-          } else {
-            if (selectedOption) {
-              newRow[selectedOption] = row[field];
-            }
-          }
-        }
-      });
-      return newRow;
-    });
-    console.log('JSON-LD Data:', jsonLDData);
+    this.dialogRef.close();
   }
   */
+  
+  injectType(type) {
+    this.selectedEntityType = type;
+  }
+  
   
 }

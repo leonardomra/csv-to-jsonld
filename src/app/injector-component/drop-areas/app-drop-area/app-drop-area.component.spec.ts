@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EventDropAreaComponent } from './event-drop-area.component';
+import { AppDropAreaComponent } from './app-drop-area.component';
 
-describe('EventDropAreaComponent', () => {
-  let component: EventDropAreaComponent;
-  let fixture: ComponentFixture<EventDropAreaComponent>;
+describe('AppDropAreaComponent', () => {
+  let component: AppDropAreaComponent;
+  let fixture: ComponentFixture<AppDropAreaComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EventDropAreaComponent ]
+      declarations: [ AppDropAreaComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EventDropAreaComponent);
+    fixture = TestBed.createComponent(AppDropAreaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

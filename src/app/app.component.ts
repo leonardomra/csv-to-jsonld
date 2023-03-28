@@ -2,7 +2,7 @@ import { Component, ChangeDetectorRef } from '@angular/core';
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
 import * as Papa from 'papaparse';
 import { MatDialog } from '@angular/material/dialog';
-import { TableInjectorComponent } from './table-injector/table-injector.component';
+import { TableInjectorComponent } from './injector-component/table-injector/table-injector.component';
 
 @Component({
   selector: 'app-root',

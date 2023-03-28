@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { GridOptions } from 'ag-grid-community';
-import { rowData } from '../data';
+import { rowData } from '../../data';
 import { ImageCellRendererComponent } from './image-cell-renderer.component';
 import { CustomHeaderComponent } from './custom-header.component';
 import { AgGridAngular } from 'ag-grid-angular';
-import { TableDataService } from '../table-data.service';
+import { TableDataService } from '../../table-data.service';
 import * as XLSX from 'xlsx';
 import { parse } from 'papaparse';
 
@@ -15,6 +15,7 @@ import { parse } from 'papaparse';
 })
 export class AgGridTableComponentComponent implements OnInit {
 
+  @Output() onTableType = new EventEmitter<string>();
   @ViewChild(AgGridAngular, { static: false }) agGrid: AgGridAngular;
   gridOptions: GridOptions;
   columnDefs: any[];
@@ -253,6 +254,7 @@ export class AgGridTableComponentComponent implements OnInit {
   onDropAreaSelected(type: string, event: any) {
     console.log('onDropAreaSelected', type, event);
     this.selectedDropArea = type;
+    this.onTableType.emit(type);
     let file = null;
     if (event.target && event.target.files) {
       file = event.target.files[0];

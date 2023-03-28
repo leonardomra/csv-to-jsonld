@@ -14,11 +14,11 @@ import { TableModule } from 'primeng/table';
 
 // Drag and drop module
 import { NgxFileDropModule } from 'ngx-file-drop';
-import { AgGridTableComponentComponent } from './ag-grid-table-component/ag-grid-table-component.component';
+import { AgGridTableComponentComponent } from './injector-component/ag-grid-table-component/ag-grid-table-component.component';
 import { AgGridModule } from 'ag-grid-angular';
-import { ImageCellRendererComponent } from './ag-grid-table-component/image-cell-renderer.component';
-import { CustomHeaderComponent } from './ag-grid-table-component/custom-header.component';
-import { TableInjectorComponent } from './table-injector/table-injector.component';
+import { ImageCellRendererComponent } from './injector-component/ag-grid-table-component/image-cell-renderer.component';
+import { CustomHeaderComponent } from './injector-component/ag-grid-table-component/custom-header.component';
+import { TableInjectorComponent } from './injector-component/table-injector/table-injector.component';
 import { TableDataService } from './table-data.service';
 
 import { MatButtonModule } from '@angular/material/button';
@@ -28,12 +28,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PersonDropAreaComponent } from './drop-areas/person-drop-area/person-drop-area.component';
-import { ConceptDropAreaComponent } from './drop-areas/concept-drop-area/concept-drop-area.component';
-import { LocationDropAreaComponent } from './drop-areas/location-drop-area/location-drop-area.component';
-import { ArtifactDropAreaComponent } from './drop-areas/artifact-drop-area/artifact-drop-area.component';
-import { EventDropAreaComponent } from './drop-areas/event-drop-area/event-drop-area.component';
-import { InstitutionDropAreaComponent } from './drop-areas/institution-drop-area/institution-drop-area.component';
+import { AppDropAreaComponent } from './injector-component/drop-areas/app-drop-area/app-drop-area.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,12 +36,7 @@ import { InstitutionDropAreaComponent } from './drop-areas/institution-drop-area
     ImageCellRendererComponent,
     CustomHeaderComponent,
     TableInjectorComponent,
-    PersonDropAreaComponent,
-    ConceptDropAreaComponent,
-    LocationDropAreaComponent,
-    ArtifactDropAreaComponent,
-    EventDropAreaComponent,
-    InstitutionDropAreaComponent
+    AppDropAreaComponent
   ],
   imports: [
     MatRippleModule,
